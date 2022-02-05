@@ -2,10 +2,11 @@ module Api
   module V1
     class BlogsController < ApplicationController
       before_action :authenticate_user!
-      before_action :find_blog, only: %i[update show]
+      before_action :find_blog, only: %i[update show destroy]
 
       def index
         @blogs = current_user.blogs
+        render json: { blogs: @blogs.as_json, success: true }, status: :ok
       end
 
       def create
@@ -18,7 +19,7 @@ module Api
       end
 
       def update
-        if @blog.update(user_params)
+        if @blog.update(blog_params)
           render json: @blog.as_json, status: 201
         else
           render json: { errors: @blog.errors.full_messages }, status: 422
@@ -27,6 +28,11 @@ module Api
 
       def show
         render json: { blog: @blog.as_json }, status: :ok
+      end
+
+      def destroy
+        @blog.destroy
+        render json: { message: 'Blog deleted successfully.' }, status: :ok
       end
 
 
