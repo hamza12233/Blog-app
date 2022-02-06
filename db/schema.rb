@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_05_123736) do
+ActiveRecord::Schema.define(version: 2022_02_05_173503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "account_infos", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "name_on_card"
+    t.string "card_number"
+    t.string "expiry_month"
+    t.string "expiry_year"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_account_infos_on_user_id"
+  end
 
   create_table "blogs", force: :cascade do |t|
     t.bigint "user_id"
@@ -22,6 +34,16 @@ ActiveRecord::Schema.define(version: 2022_02_05_123736) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.float "amount"
+    t.bigint "sender_account_id"
+    t.bigint "recipient_account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_account_id"], name: "index_payments_on_recipient_account_id"
+    t.index ["sender_account_id"], name: "index_payments_on_sender_account_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +71,6 @@ ActiveRecord::Schema.define(version: 2022_02_05_123736) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "payments", "account_infos", column: "recipient_account_id"
+  add_foreign_key "payments", "account_infos", column: "sender_account_id"
 end

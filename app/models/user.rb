@@ -22,7 +22,8 @@ class User < ActiveRecord::Base
   before_validation :downcase_email
   before_validation :name_senitize
 
-  has_many :blogs
+  has_many :blogs, dependent: :destroy
+  has_one :account_info, dependent: :destroy
 
   def as_json(options = {})
     super(only: %i[id name nickname email image])

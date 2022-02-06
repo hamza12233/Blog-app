@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: %i[update show]
       resources :blogs
+      resources :payments, only: %i[create]
+      resources :account_infos, only: %i[create]
     end
   end
 end

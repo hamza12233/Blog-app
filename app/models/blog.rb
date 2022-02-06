@@ -8,4 +8,12 @@ class Blog < ApplicationRecord
   ].freeze
 
   validates :title, presence: true, length: {minimum:3}
+
+  def as_json
+    super({
+      include: {
+        user: {only: %i[name email]}
+      }
+    })
+  end
 end
