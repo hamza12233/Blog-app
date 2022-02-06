@@ -5,7 +5,7 @@ module Api
       before_action :find_blog, only: %i[update show destroy]
 
       def index
-        @blogs = current_user.blogs
+        @blogs = params[:search].present? ? Blog.search_blog(params[:search]) : Blog.all
         render json: { blogs: @blogs.as_json, success: true }, status: :ok
       end
 

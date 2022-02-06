@@ -9,6 +9,8 @@ class Blog < ApplicationRecord
 
   validates :title, presence: true, length: {minimum:3}
 
+  scope :search_blog, ->(blog) { where("title LIKE ?", "%"+blog+"%") }
+
   def as_json
     super({
       include: {
