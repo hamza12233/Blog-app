@@ -7,19 +7,19 @@ RSpec.describe BlogsController, type: :routing do
     end
 
     it "route to #create" do
-      expect(post: "/blogs").to route_to("blogs#create")
+      expect(post: "api/v1/blogs").to route_to("blogs#create")
     end
 
     it "route to #update" do
-      expect(put: "/blogs/1").to route_to("blogs#update", id: "1")
+      expect(put: "api/v1/blogs/1").to route_to("blogs#update", id: "1")
     end
 
     it "route to #show" do
-      expect(get: "/blogs/1").to route_to("blogs#show", id: "1")
+      expect(get: "api/v1/blogs/1").to route_to("blogs#show", id: "1")
     end
 
     it "route to #destroy" do
-      expect(delete: "/blogs/1").to route_to("blogs#destroy", id: "1")
+      expect(delete: "api/v1/blogs/1").to route_to("blogs#destroy", id: "1")
     end
   end
 end
