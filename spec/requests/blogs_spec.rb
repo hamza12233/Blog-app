@@ -1,6 +1,6 @@
 # require "rails helper"
 
-RSpec.describe "/blogs", type: :request do
+RSpec.describe "api/v1/blogs", type: :request do
   current_user = User.first_or_create!(email: "hamza@gmail.com", password:"qwerty", password_confirmation: "qwerty")
   let(:valid_attributes) do
     {
